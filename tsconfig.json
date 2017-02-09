@@ -1,0 +1,18 @@
+{
+  "compileOnSave": false,
+  "buildOnSave": false,
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "target": "es2015",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "types": [],
+    "jsx": "react"
+  },
+  "files": [],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
