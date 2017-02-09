@@ -1,16 +1,18 @@
 const isProd = process.env.NODE_ENV === 'production',
     webpack = require('webpack'),
-    { CheckerPlugin } = require('awesome-typescript-loader');
+    nodeExternals = require('webpack-node-externals');
 
 const config = {
-    entry: './src/client/client.tsx',
-    output: {
-        filename: 'bundle.js',
-        path: __dirname + '/dist'
+    target: 'node',
+    externals: [nodeExternals()],
+    node: {
+        __dirname: true
     },
-
-    // Enable sourcemaps for debugging webpack's output.
-    devtool: isProd ? '' : '#eval',
+    entry: './src/server/server.ts',
+    output: {
+        filename: 'server.bundle.js',
+        path: './dist'
+    },
 
     // Currently we need to add '.ts' to the resolve.extensions array.
     resolve: {
@@ -29,13 +31,5 @@ const config = {
     },
     plugins: []
 };
-
-if (!isProd) {
-    config.plugins.push(
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NamedModulesPlugin(),
-        new CheckerPlugin()
-    )
-}
 
 module.exports = config;
