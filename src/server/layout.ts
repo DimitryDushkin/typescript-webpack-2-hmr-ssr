@@ -16,6 +16,11 @@ export default function(content: String) {
 
     <body class='body'>
         <div class='app-container'>${content}</div>
+        ${
+            isDevelopment
+                ? '<script src="http://localhost:8080/bundle.js"></script>'
+                : '<script src="/bundle.js"></script>'
+        }
     </body>
 
     </html>`;

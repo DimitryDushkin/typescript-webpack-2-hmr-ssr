@@ -2,12 +2,12 @@
   "compileOnSave": false,
   "buildOnSave": false,
   "compilerOptions": {
+    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "target": "es2015",
     "module": "es2015",
     "moduleResolution": "node",
     "sourceMap": true,
-    "types": [],
     "jsx": "react"
   },
   "files": [],

@@ -1,12 +1,14 @@
 const isProd = process.env.NODE_ENV === 'production',
     webpack = require('webpack'),
-    { CheckerPlugin } = require('awesome-typescript-loader');
+    { CheckerPlugin } = require('awesome-typescript-loader'),
+    WEBPACK_DEV_SERVER_PORT = 8080;
 
 const config = {
-    entry: './src/client/client.tsx',
+    entry: ['./src/client/client.tsx'],
     output: {
         filename: 'bundle.js',
-        path: './dist/public'
+        path: '/dist/public',
+        publicPath: `http://localhost:${WEBPACK_DEV_SERVER_PORT}/`,
     },
 
     // Enable sourcemaps for debugging webpack's output.
@@ -22,20 +24,38 @@ const config = {
             // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
             {
                 test: /\.tsx?$/,
-                loader: 'awesome-typescript-loader',
+                loader: ['awesome-typescript-loader'],
                 exclude: /node_modules/
             }
         ]
     },
-    plugins: []
+    plugins: [],
+    devServer: {
+        hot: true,
+        compress: true,
+        port: WEBPACK_DEV_SERVER_PORT
+    }
 };
 
 if (!isProd) {
+    config.entry.unshift(
+        'react-hot-loader/patch'
+    );
+    config.module.rules[0].loader.unshift('react-hot-loader/webpack');
+
     config.plugins.push(
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
         new CheckerPlugin()
-    )
+    );
+} else {
+    config.plugins.push(
+         new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
+        })
+    );
 }
 
 module.exports = config;
