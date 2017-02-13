@@ -25,5 +25,10 @@
     "webpack-dev-server": "^2.3.0",
     "webpack-hot-middleware": "^2.16.1",
     "webpack-node-externals": "^1.5.4"
+  },
+  "scripts": {
+    "dev": "",
+    "dev-client": "webpack-dev-server --config webpack/webpack.client.config.js",
+    "build": "NODE_ENV=production webpack --progress -p"
   }
 }
